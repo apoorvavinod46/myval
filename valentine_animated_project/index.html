@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Forever Us ♾️</title>
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(#f9c5d1,#fddde6);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Comic Sans MS',cursive;
+  overflow:hidden;
+}
+.card{
+  background:#fff;
+  width:340px;
+  border-radius:24px;
+  padding:22px;
+  text-align:center;
+  box-shadow:0 14px 35px rgba(0,0,0,.15);
+  animation:fade .5s ease;
+}
+h2{margin:8px 0;}
+.date{color:#ff4d6d;font-weight:bold;}
+img{width:200px;margin:14px 0;border-radius:16px;}
+p{color:#555;line-height:1.4;}
+button{
+  background:#ff4d6d;
+  border:none;
+  color:#fff;
+  padding:12px 26px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  margin-top:10px;
+}
+button:hover{transform:scale(1.08);}
+.mail{width:140px;cursor:pointer;animation:bounce 1.2s infinite;}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:6px;
+}
+.grid img{width:100%;display:none;}
+@keyframes fade{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card"></div>
+
+<script>
+let step = 0;
+let memoryIndex = 0;
+
+function show(html){
+  card.innerHTML = html;
+}
+
+function next(){
+  step++;
+  flow();
+}
+
+function flow(){
+  switch(step){
+
+    /* MAIL AFTER LOVE PASS */
+    case 0:
+      show(`
+        <h2>You have something 💌</h2>
+        <img src="mail.png" class="mail" onclick="next()">
+        <p>Tap to open</p>
+      `);
+      break;
+
+    /* LETTER PAGE */
+    case 1:
+      show(`
+        <h2>My Letter For You 💖</h2>
+        <p><b>My love ❤️</b></p>
+        <p>
+        Loving you is the best thing that ever happened to me.<br><br>
+        You make my normal days special and my bad days better.<br><br>
+        I promise to choose you – today, tomorrow and forever.
+        </p>
+        <p style="margin-top:12px;">
+        Forever Yours,<br>
+        <b>Jaanu</b>
+        </p>
+        <button onclick="next()">See our memories 📸</button>
+      `);
+      break;
+
+    /* MEMORIES GRID */
+    case 2:
+      show(`
+        <h2>Our Memories 💗</h2>
+        <div class="grid">
+          ${[1,2,3,4,5,6,7,8,9].map(i=>`<img src="memories/${i}.jpg">`).join("")}
+        </div>
+        <button onclick="next()">Forever Us ♾️</button>
+      `);
+      revealMemories();
+      break;
+
+    /* FINAL FOREVER PAGE */
+    case 3:
+      show(`
+        <img src="forever.jpg">
+        <h2>♾️ I Choose You, Always ♾️</h2>
+      `);
+      break;
+  }
+}
+
+function revealMemories(){
+  const imgs = document.querySelectorAll(".grid img");
+  memoryIndex = 0;
+  const interval = setInterval(()=>{
+    if(memoryIndex >= imgs.length){
+      clearInterval(interval);
+      return;
+    }
+    imgs[memoryIndex].style.display="block";
+    memoryIndex++;
+  },300);
+}
+
+flow();
+</script>
+
+</body>
+</html>
