@@ -22,7 +22,19 @@ body{
   text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,.2);
   position:relative;
+  z-index:2;
+  color:#444;
 }
+
+.val-text{
+  background:#ffe6ee;
+  padding:12px;
+  border-radius:14px;
+  margin-top:10px;
+  font-size:15px;
+  line-height:1.4;
+}
+
 img{width:200px;border-radius:16px;margin:10px 0}
 button{
   background:#ff4d6d;
@@ -202,9 +214,11 @@ function showVal(){
  render(`
  <h2>${v[0]}</h2>
  <img src="${v[1]}">
+ <div class="val-text">${v[2]}</div>
  <button onclick="next()">Next 💞</button>
  `);
 }
+
 
 function yes(){ step=1; flow(); }
 
