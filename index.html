@@ -1,223 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
-
+<title>Valentine ❤️</title>
 <style>
-body{
-  margin:0;
-  height:100vh;
-  background:linear-gradient(#f9c5d1,#fddde6);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-family:'Comic Sans MS',cursive;
-}
-.card{
-  width:340px;
-  background:white;
-  border-radius:24px;
-  padding:22px;
-  text-align:center;
-  box-shadow:0 15px 35px rgba(0,0,0,.15);
-  animation:fade .4s ease;
-  position:relative;
-}
-h2{margin:10px 0}
-p{color:#555;line-height:1.4}
-button{
-  background:#ff4d6d;
-  color:white;
-  border:none;
-  padding:12px 24px;
-  border-radius:30px;
-  font-size:16px;
-  cursor:pointer;
-  margin-top:12px;
-}
-button:hover{transform:scale(1.08)}
-.no{
-  background:white;
-  color:#ff4d6d;
-  border:2px solid #ff4d6d;
-  position:absolute;
-}
-img{
-  width:180px;
-  border-radius:16px;
-  margin:10px 0;
-}
-.box{
-  background:#ffe6ee;
-  border-radius:16px;
-  padding:16px;
-  margin:10px 0;
-}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-.memory{
-  background:#ffd6e0;
-  height:70px;
-  border-radius:12px;
-  display:none;
-}
-@keyframes fade{
-  from{opacity:0;transform:scale(.95)}
-  to{opacity:1;transform:scale(1)}
-}
+body{margin:0;font-family:'Comic Sans MS';background:#ffd6e6;text-align:center}
+.page{display:none;padding:20px}
+.active{display:block}
+button{padding:12px 24px;border-radius:30px;border:none;background:#ff4d6d;color:#fff;font-size:16px}
+img{width:200px;margin:15px}
+.heart{position:fixed;top:-20px;animation:fall 5s linear infinite}
+@keyframes fall{to{transform:translateY(110vh)}}
 </style>
 </head>
-
 <body>
 
-<div class="card" id="card"></div>
+<audio src="music/romantic.mp3" autoplay loop></audio>
+
+<div class="page active" id="p0">
+<h2>Will you be my Valentine? 💖</h2>
+<img src="gifs/placeholder.gif">
+<br>
+<button onclick="go(1)">Yes</button>
+</div>
+
+<div class="page" id="p1">
+<h2>I knew you'd say YES ❤️</h2>
+<p>LOVE PASS</p>
+<button onclick="go(2)">Next</button>
+</div>
+
+<div class="page" id="p2">
+<h2>Valentine Week 💕</h2>
+<p>9 cute cards (GIF ready)</p>
+<button onclick="go(3)">Next</button>
+</div>
+
+<div class="page" id="p3">
+<h2>My Letter For You 💌</h2>
+<p>Loving you is the best thing that ever happened to me.</p>
+<button onclick="go(4)">See our memories 📸</button>
+</div>
+
+<div class="page" id="p4">
+<h2>Our Memories 💗</h2>
+<button onclick="go(5)">Forever Us ♾️</button>
+</div>
+
+<div class="page" id="p5">
+<h2>♾️ I Choose You, Always ♾️</h2>
+</div>
 
 <script>
-let step = 0;
-let sub = 0;
-let noCount = 0;
-
-const noTexts = [
-  "Are you sure? 🥺",
-  "Think again 😭",
-  "Don't break my heart 💔",
-  "Pleaseee 🥹",
-  "You have no escape 😈"
-];
-
-const valentineWeek = [
-  ["🌹 Rose Day","https://media.tenor.com/8K6K4kzE0pQAAAAi/teddy-rose.gif"],
-  ["🤗 Hug Day","https://media.tenor.com/I6kN-6VwK9kAAAAi/teddy-hug.gif"],
-  ["🍫 Chocolate Day","https://media.tenor.com/fv3YF2x5yVYAAAAi/teddy-chocolate.gif"],
-  ["🧸 Teddy Day","https://media.tenor.com/1X6y6bY8cYkAAAAi/teddy-love.gif"],
-  ["💍 Promise Day","https://media.tenor.com/FxgJzQ9d6KkAAAAi/teddy-promise.gif"],
-  ["💋 Kiss Day","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-kiss.gif"],
-  ["💖 Valentine Day","https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif"],
-  ["💌 Love Day","https://media.tenor.com/6vJkHjP4YxkAAAAi/teddy-love.gif"],
-  ["♾️ Forever Day","https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif"]
-];
-
-function render(html){ card.innerHTML = html; }
-
-function next(){
-  if(step === 2){
-    sub++;
-    if(sub < valentineWeek.length){ showValentine(); return; }
-    sub = 0;
-  }
-  step++;
-  flow();
+function go(n){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.getElementById('p'+n).classList.add('active');
 }
-
-function flow(){
-
-// 1 — PROPOSAL
-if(step === 0){
-  render(`
-    <h2>Will you be my Valentine? 💖</h2>
-    <img src="https://media.tenor.com/YtAOA0bq2WgAAAAi/teddy-love.gif">
-    <button onclick="yes()">Yes 💕</button>
-    <button class="no" id="noBtn">No 🙈</button>
-  `);
-  moveNo();
-}
-
-// 2 — YES + LOVE PASS
-if(step === 1){
-  render(`
-    <h2>I know you would say YES ❤️</h2>
-    <img src="https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif">
-    <div class="box">
-      <h3>LOVE PASS 💘</h3>
-      <p><b>Name:</b> Suraj</p>
-      <p><b>Date:</b> Feb 14</p>
-      <p><b>Destination:</b> ∞ Forever</p>
-      <p><b>Seat:</b> My Heart ❤️</p>
-    </div>
-    <button onclick="next()">Next 💞</button>
-  `);
-}
-
-// 3 — VALENTINE WEEK
-if(step === 2){ showValentine(); }
-
-// 4 — LETTER
-if(step === 3){
-  render(`
-    <h2>My Letter For You 💌</h2>
-    <img src="https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif">
-    <p><b>My Love ❤️</b></p>
-    <p>
-      Loving you is the best thing that ever happened to me.<br><br>
-      You make my normal days special and my bad days better.<br><br>
-      I promise to choose you — today, tomorrow and forever.
-    </p>
-    <p><b>Forever Yours,<br>Jaanu</b></p>
-    <button onclick="next()">See our memories 📸</button>
-  `);
-}
-
-// 5 — MEMORIES
-if(step === 4){
-  render(`
-    <h2>Our Memories 💗</h2>
-    <img src="https://media.tenor.com/6vJkHjP4YxkAAAAi/teddy-camera.gif">
-    <div class="grid">
-      ${Array(9).fill(0).map(()=>`<div class="memory"></div>`).join("")}
-    </div>
-    <button onclick="next()">Forever Us ♾️</button>
-  `);
-  revealMemories();
-}
-
-// 6 — FOREVER
-if(step === 5){
-  render(`
-    <h2>♾️ I Choose You, Always ♾️</h2>
-    <img src="https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif">
-    <p>This is forever. This is us.</p>
-  `);
-}
-
-}
-
-function showValentine(){
-  const v = valentineWeek[sub];
-  render(`
-    <h2>${v[0]}</h2>
-    <img src="${v[1]}">
-    <p>You make this day special 💕</p>
-    <button onclick="next()">Next 💞</button>
-  `);
-}
-
-function yes(){ step = 1; flow(); }
-
-function moveNo(){
-  const btn = document.getElementById("noBtn");
-  btn.onmouseover = () => {
-    noCount++;
-    btn.innerText = noTexts[Math.min(noCount,noTexts.length-1)];
-    btn.style.left = Math.random()*200 + "px";
-    btn.style.top = Math.random()*200 + "px";
-  };
-}
-
-function revealMemories(){
-  const mem = document.querySelectorAll(".memory");
-  let i = 0;
-  const interval = setInterval(()=>{
-    if(i >= mem.length){ clearInterval(interval); return; }
-    mem[i].style.display="block";
-    i++;
-  },250);
-}
-
-flow();
+setInterval(()=>{
+let h=document.createElement('div');
+h.innerHTML='💖';
+h.className='heart';
+h.style.left=Math.random()*100+'vw';
+document.body.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},300);
 </script>
 
 </body>
