@@ -13,6 +13,7 @@ body{
   align-items:center;
   background:linear-gradient(#ffdde1,#ee9ca7);
   font-family:'Comic Sans MS',cursive;
+  overflow:hidden;
 }
 .card{
   width:360px;
@@ -22,6 +23,7 @@ body{
   text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,.2);
   position:relative;
+  z-index:2;
 }
 img{width:200px;border-radius:16px;margin:10px 0}
 button{
@@ -50,13 +52,37 @@ button{
   background:#ffd6e0;
   border-radius:12px;
 }
+
+/* HEART RAIN */
+.heart{
+  position:fixed;
+  top:-20px;
+  font-size:20px;
+  animation:fall linear infinite;
+  z-index:1;
+}
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
 </style>
 </head>
 
 <body>
+
 <div class="card" id="app"></div>
 
 <script>
+/* HEART RAIN */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=3+Math.random()*3+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},250);
+
 let step=0, sub=0, noCount=0;
 
 const noPrompts=[
@@ -68,15 +94,32 @@ const noPrompts=[
 ];
 
 const valWeek=[
- ["🌹 Rose Day","https://media.tenor.com/8K6K4kzE0pQAAAAi/teddy-rose.gif"],
- ["🤗 Hug Day","https://media.tenor.com/I6kN-6VwK9kAAAAi/teddy-hug.gif"],
- ["🍫 Chocolate Day","https://media.tenor.com/fv3YF2x5yVYAAAAi/teddy-chocolate.gif"],
- ["🧸 Teddy Day","https://media.tenor.com/1X6y6bY8cYkAAAAi/teddy-love.gif"],
- ["💍 Promise Day","https://media.tenor.com/FxgJzQ9d6KkAAAAi/teddy-promise.gif"],
- ["💋 Kiss Day","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-kiss.gif"],
- ["💖 Valentine Day","https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif"],
- ["💌 Love Day","https://media.tenor.com/6vJkHjP4YxkAAAAi/teddy-love.gif"],
- ["♾️ Forever Day","https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif"]
+ ["🌹 Rose Day","https://media.tenor.com/8K6K4kzE0pQAAAAi/teddy-rose.gif",
+  "Just like this rose, my love for you grows more beautiful every day."],
+
+ ["💍 Propose Day","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif",
+  "I don’t need a special day to propose — I choose you every single day."],
+
+ ["🍫 Chocolate Day","https://media.tenor.com/fv3YF2x5yVYAAAAi/teddy-chocolate.gif",
+  "Life with you is sweeter than all the chocolates in the world."],
+
+ ["🧸 Teddy Day","https://media.tenor.com/1X6y6bY8cYkAAAAi/teddy-love.gif",
+  "Whenever you need comfort, remember you always have me."],
+
+ ["🤝 Promise Day","https://media.tenor.com/FxgJzQ9d6KkAAAAi/teddy-promise.gif",
+  "I promise to stand by you, today, tomorrow, and always."],
+
+ ["🤗 Hug Day","https://media.tenor.com/I6kN-6VwK9kAAAAi/teddy-hug.gif",
+  "One hug from you can fix everything."],
+
+ ["💋 Kiss Day","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-kiss.gif",
+  "A kiss from you is my favorite kind of magic."],
+
+ ["💖 Valentine’s Day","https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif",
+  "You are my today, my tomorrow, and my forever."],
+
+ ["♾️ Forever Day","https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif",
+  "This is not just love — this is forever."]
 ];
 
 function render(h){ app.innerHTML=h; }
@@ -92,7 +135,6 @@ function next(){
 
 function flow(){
 
-// 1 Proposal
 if(step===0){
  render(`
  <h2>Will you be my Valentine? 💖</h2>
@@ -104,11 +146,10 @@ if(step===0){
  moveNo();
 }
 
-// 2 Love Pass
 if(step===1){
  render(`
  <h2>I knew you’d say YES ❤️</h2>
- <img src="https://tenor.com/v5ryP3NtKFm.gif">
+ <img src="https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif">
  <p><b>LOVE PASS 💖</b></p>
  <p>Name: Suraj</p>
  <p>Date: Feb 14th</p>
@@ -118,10 +159,8 @@ if(step===1){
  `);
 }
 
-// 3 Valentine Week
 if(step===2){ showVal(); }
 
-// 4 Letter
 if(step===3){
  render(`
  <h2>My Letter For You 💌</h2>
@@ -137,49 +176,8 @@ if(step===3){
  `);
 }
 
-// 5 Memories
 if(step===4){
  render(`
  <h2>Our Memories 💗</h2>
  <div class="grid">
- ${"<div class='slot'></div>".repeat(9)}
- </div>
- <button onclick="next()">Forever Us ♾️</button>
- `);
-}
-
-// 6 Forever
-if(step===5){
- render(`
- <h2>♾️ I Choose You, Always ♾️</h2>
- <div class="slot" style="height:200px"></div>
- `);
-}
-
-}
-
-function showVal(){
- const v=valWeek[sub];
- render(`
- <h2>${v[0]}</h2>
- <img src="${v[1]}">
- <button onclick="next()">Next 💞</button>
- `);
-}
-
-function yes(){ step=1; flow(); }
-
-function moveNo(){
- const b=document.getElementById("noBtn");
- b.onmouseover=()=>{
-   noCount++;
-   b.innerText=noPrompts[Math.min(noCount,4)];
-   b.style.left=Math.random()*220+"px";
-   b.style.top=Math.random()*180+"px";
- };
-}
-
-flow();
-</script>
-</body>
-</html>
+ ${"<div
