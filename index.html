@@ -72,13 +72,15 @@ button{
 <div class="card" id="app"></div>
 
 <script>
+const app = document.getElementById("app");
+
 /* HEART RAIN */
 setInterval(()=>{
   const h=document.createElement("div");
   h.className="heart";
-  h.innerHTML="💖";
+  h.innerText="💖";
   h.style.left=Math.random()*100+"vw";
-  h.style.animationDuration=3+Math.random()*3+"s";
+  h.style.animationDuration=(3+Math.random()*3)+"s";
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),6000);
 },250);
@@ -94,35 +96,18 @@ const noPrompts=[
 ];
 
 const valWeek=[
- ["🌹 Rose Day","https://media.tenor.com/8K6K4kzE0pQAAAAi/teddy-rose.gif",
-  "Just like this rose, my love for you grows more beautiful every day."],
-
- ["💍 Propose Day","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif",
-  "I don’t need a special day to propose — I choose you every single day."],
-
- ["🍫 Chocolate Day","https://media.tenor.com/fv3YF2x5yVYAAAAi/teddy-chocolate.gif",
-  "Life with you is sweeter than all the chocolates in the world."],
-
- ["🧸 Teddy Day","https://media.tenor.com/1X6y6bY8cYkAAAAi/teddy-love.gif",
-  "Whenever you need comfort, remember you always have me."],
-
- ["🤝 Promise Day","https://media.tenor.com/FxgJzQ9d6KkAAAAi/teddy-promise.gif",
-  "I promise to stand by you, today, tomorrow, and always."],
-
- ["🤗 Hug Day","https://media.tenor.com/I6kN-6VwK9kAAAAi/teddy-hug.gif",
-  "One hug from you can fix everything."],
-
- ["💋 Kiss Day","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-kiss.gif",
-  "A kiss from you is my favorite kind of magic."],
-
- ["💖 Valentine’s Day","https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif",
-  "You are my today, my tomorrow, and my forever."],
-
- ["♾️ Forever Day","https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif",
-  "This is not just love — this is forever."]
+ ["Rose Day 🌹","https://media.tenor.com/8K6K4kzE0pQAAAAi/teddy-rose.gif","Just like this rose, my love for you grows more beautiful every day."],
+ ["Propose Day 💍","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif","I don’t need a special day to propose — I choose you every single day."],
+ ["Chocolate Day 🍫","https://media.tenor.com/fv3YF2x5yVYAAAAi/teddy-chocolate.gif","Life with you is sweeter than all the chocolates in the world."],
+ ["Teddy Day 🧸","https://media.tenor.com/1X6y6bY8cYkAAAAi/teddy-love.gif","Whenever you need comfort, remember you always have me."],
+ ["Promise Day 🤝","https://media.tenor.com/FxgJzQ9d6KkAAAAi/teddy-promise.gif","I promise to stand by you, today, tomorrow, and always."],
+ ["Hug Day 🤗","https://media.tenor.com/I6kN-6VwK9kAAAAi/teddy-hug.gif","One hug from you can fix everything."],
+ ["Kiss Day 💋","https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-kiss.gif","A kiss from you is my favorite kind of magic."],
+ ["Valentine Day 💖","https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif","You are my today, my tomorrow, and my forever."],
+ ["Forever Day ♾️","https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif","This is not just love — this is forever."]
 ];
 
-function render(h){ app.innerHTML=h; }
+function render(html){ app.innerHTML = html; }
 
 function next(){
  if(step===2){
@@ -130,7 +115,8 @@ function next(){
    if(sub<9){ showVal(); return; }
    sub=0;
  }
- step++; flow();
+ step++;
+ flow();
 }
 
 function flow(){
@@ -139,7 +125,6 @@ if(step===0){
  render(`
  <h2>Will you be my Valentine? 💖</h2>
  <img src="https://media.tenor.com/YtAOA0bq2WgAAAAi/teddy-love.gif">
- <br>
  <button onclick="yes()">Yes 💕</button>
  <button class="no" id="noBtn">No 🙈</button>
  `);
@@ -148,7 +133,7 @@ if(step===0){
 
 if(step===1){
  render(`
- <h2>I knew you’d say YES ❤️</h2>
+ <h2>I knew you would say YES ❤️</h2>
  <img src="https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif">
  <p><b>LOVE PASS 💖</b></p>
  <p>Name: Suraj</p>
@@ -169,7 +154,7 @@ if(step===3){
  <p>
  Loving you is the best thing that ever happened to me.<br><br>
  You make my normal days special and my bad days better.<br><br>
- I promise to choose you — today, tomorrow and forever.
+ I promise to choose you - today tomorrow and forever.
  </p>
  <p><b>Forever Yours,<br>Jaanu</b></p>
  <button onclick="next()">See our memories 📸</button>
@@ -179,5 +164,43 @@ if(step===3){
 if(step===4){
  render(`
  <h2>Our Memories 💗</h2>
- <div class="grid">
- ${"<div
+ <div class="grid">${"<div class='slot'></div>".repeat(9)}</div>
+ <button onclick="next()">Forever Us ♾️</button>
+ `);
+}
+
+if(step===5){
+ render(`
+ <h2>♾️ I Choose You, Always ♾️</h2>
+ <div class="slot" style="height:200px"></div>
+ `);
+}
+}
+
+function showVal(){
+ const v=valWeek[sub];
+ render(`
+ <h2>${v[0]}</h2>
+ <img src="${v[1]}">
+ <p>${v[2]}</p>
+ <button onclick="next()">Next 💞</button>
+ `);
+}
+
+function yes(){ step=1; flow(); }
+
+function moveNo(){
+ const b=document.getElementById("noBtn");
+ b.onmouseover=()=>{
+   noCount++;
+   b.innerText=noPrompts[Math.min(noCount,4)];
+   b.style.left=Math.random()*220+"px";
+   b.style.top=Math.random()*180+"px";
+ };
+}
+
+flow();
+</script>
+
+</body>
+</html>
