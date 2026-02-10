@@ -210,14 +210,75 @@ if(step===5){
 }
 
 function showVal(){
- const v=valWeek[sub];
- render(`
- <h2>${v[0]}</h2>
- <img src="${v[1]}">
- <div class="val-text">${v[2]}</div>
- <button onclick="next()">Next 💞</button>
- `);
+  let title = "";
+  let gif = "";
+  let text = "";
+
+  if(sub === 0){
+    title = "Rose Day 🌹";
+    gif = "https://media.tenor.com/8K6K4kzE0pQAAAAi/teddy-rose.gif";
+    text = "Just like this rose, my love for you grows more beautiful every day.";
+  }
+  if(sub === 1){
+    title = "Propose Day 💍";
+    gif = "https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-happy.gif";
+    text = "I don’t need a special day to propose — I choose you every single day.";
+  }
+  if(sub === 2){
+    title = "Chocolate Day 🍫";
+    gif = "https://media.tenor.com/fv3YF2x5yVYAAAAi/teddy-chocolate.gif";
+    text = "Life with you is sweeter than all the chocolates in the world.";
+  }
+  if(sub === 3){
+    title = "Teddy Day 🧸";
+    gif = "https://media.tenor.com/1X6y6bY8cYkAAAAi/teddy-love.gif";
+    text = "Whenever you need comfort, remember you always have me.";
+  }
+  if(sub === 4){
+    title = "Promise Day 🤝";
+    gif = "https://media.tenor.com/FxgJzQ9d6KkAAAAi/teddy-promise.gif";
+    text = "I promise to stand by you — today, tomorrow, and always.";
+  }
+  if(sub === 5){
+    title = "Hug Day 🤗";
+    gif = "https://media.tenor.com/I6kN-6VwK9kAAAAi/teddy-hug.gif";
+    text = "One hug from you can fix everything.";
+  }
+  if(sub === 6){
+    title = "Kiss Day 💋";
+    gif = "https://media.tenor.com/8zZt6D7sYkYAAAAi/teddy-kiss.gif";
+    text = "A kiss from you is my favorite kind of magic.";
+  }
+  if(sub === 7){
+    title = "Valentine Day 💖";
+    gif = "https://media.tenor.com/9Fz9Y9y1pXcAAAAi/teddy-valentine.gif";
+    text = "You are my today, my tomorrow, and my forever.";
+  }
+  if(sub === 8){
+    title = "Forever Day ♾️";
+    gif = "https://media.tenor.com/y5qFz1LzN6UAAAAi/teddy-heart.gif";
+    text = "This is not just love — this is forever.";
+  }
+
+  render(`
+    <h2>${title}</h2>
+    <img src="${gif}">
+    <div style="
+      background:#ffe6ee;
+      color:#000;
+      padding:14px;
+      border-radius:14px;
+      margin-top:12px;
+      font-size:15px;
+      font-weight:600;
+      line-height:1.4;
+    ">
+      ${text}
+    </div>
+    <button onclick="next()">Next 💞</button>
+  `);
 }
+
 
 
 function yes(){ step=1; flow(); }
